@@ -83,8 +83,6 @@ public class MaxHeap {
             k = j;
 
         }
-
-
     }
 
     public void heapSort(int[] arr) {

@@ -3,6 +3,9 @@ package com.dx.binary;
 
 import com.dx.util.AssistUtil;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BST<E extends Comparable<E>> {
 
     private class Node {
@@ -68,14 +71,70 @@ public class BST<E extends Comparable<E>> {
 
     }
 
+    public E getMin(){
+
+        if(size == 0) {
+            return null;
+        }
+
+        return getMin(root);
+    }
+
+    private E getMin(Node root) {
+
+        if(root.left == null){
+            return root.data;
+        }
+        return  getMin(root.left);
+    }
+
+    public E getMax(){
+
+       if(size == 0){
+           return null;
+       }
+       return getMax(root);
+
+    }
+
+    private E getMax(Node root) {
+
+        if(root.right == null){
+            return root.data;
+        }
+        return getMax(root.right);
+
+    }
+
+    public void levelOrder(){
+
+        Queue<Node> dataQ = new LinkedList<>();
+
+        dataQ.add(root);
+
+        while (dataQ.size() != 0){
+            Node temp = dataQ.poll();
+            System.out.println(temp.data);
+            if(temp.left != null){
+                dataQ.add(temp.left);
+            }
+            if(temp.right != null){
+                dataQ.add(temp.right);
+            }
+        }
+
+    }
+
+
     public static void main(String[] args) {
         int[] ints = AssistUtil.generateArr(10, 1, 20);
         BST bst = new BST();
         for (int anInt : ints) {
             bst.add(anInt);
         }
-
         bst.inOrder();
+        System.out.println("min:"+bst.getMin());
+        System.out.println("max:"+bst.getMax());
     }
 
 
