@@ -8,7 +8,6 @@ public class lee242 {
 
         char[] sList = s.toCharArray();
         char[] tList = t.toCharArray();
-
         Arrays.sort(sList);
         Arrays.sort(tList);
         return Arrays.equals(sList,tList);
