@@ -34,6 +34,8 @@ public class lee120 {
 
     /**
      * 自底向上dp
+     *  错误：我一开始从上到底遍历，用一维数组记录，导致前面的记录被抹除
+     *  正解：自底向上dp
      * @param triangle
      * @return
      */
@@ -45,41 +47,8 @@ public class lee120 {
                 minlen[i] = Math.min(minlen[i], minlen[i+1]) + triangle.get(level).get(i);
             }
         }
+
         return minlen[0];
-    }
-
-
-
-    public static void main(String[] args) {
-        List<List<Integer>> triangle = new ArrayList<>();
-        List<Integer> one = new ArrayList<>();
-        one.add(2);
-        triangle.add(one);
-
-        List<Integer> two = new ArrayList<>();
-        two.add(3);
-        two.add(4);
-
-        List<Integer> three = new ArrayList<>();
-        three.add(6);
-        three.add(5);
-        three.add(7);
-
-
-        List<Integer> four = new ArrayList<>();
-        four.add(4);
-        four.add(1);
-        four.add(8);
-        four.add(3);
-
-        triangle.add(two);
-        triangle.add(three);
-        triangle.add(four);
-
-        int i = minimumTotal(triangle);
-        System.out.println(i);
-
-
     }
 
 
