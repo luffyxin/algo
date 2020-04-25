@@ -10,12 +10,16 @@ public class main02 {
         Stopwatch timer = Stopwatch.createUnstarted();
 
 
-        int[] ints = AssistUtil.generateArr(10000, 0, 10000);
+        int[] ints = AssistUtil.generateArr(20, 0, 100);
 
 
         timer.start();
-        mergeSort(ints);
+        youInsertSort(ints);
         timer.stop();
+
+        for (int anInt : ints) {
+            System.out.print(anInt+" ");
+        }
 
         System.out.println(timer);
 

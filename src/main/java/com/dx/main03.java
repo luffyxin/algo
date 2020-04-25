@@ -4,9 +4,9 @@ public class main03 {
 
 
     public static void main(String[] args) {
-
-        int num = -4500;
-        test(num);
+        int i = 0;
+        i = i++ + i;
+        System.out.println("I =" +i);
 
     }
 

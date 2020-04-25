@@ -2,177 +2,138 @@ package com.dx.sort;
 
 import com.dx.util.AssistUtil;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
+import java.util.Random;
+
 /**
  * @author dx
  */
 public class ReviewSortOne {
 
-    public static void heapSort(int arr[], int n) {
 
-        for (int i = (n - 1) /2; i >= 0; i--) {
-            shiftDown(arr, n, i);
-        }
+    public static void mergeSort(int[] arr, int left, int right) {
 
-        for (int i = n - 1; i > 0; i--) {
-            AssistUtil.swap(arr, i, 0);
-            shiftDown(arr, i, 0);
-        }
-    }
-
-    private static void shiftDown(int[] arr, int n, int k) {
-
-        while (k * 2 + 1 < n) {
-
-            int j = k *2 +1;
-            if (j + 1 < n && arr[j+1] > arr[j]){
-                j++;
-            }
-            if(arr[j] <= arr[k]){
-                return;
-            }
-            AssistUtil.swap(arr,k,j);
-            k = j;
-
-        }
-
-
-    }
-
-
-    public static void quickSort(int arr[]) {
-
-        quickSort(arr, 0, arr.length - 1);
-
-    }
-
-    private static void quickSort(int[] arr, int l, int r) {
-
-        if (l >= r) {
+        if (left >= right) {
             return;
         }
 
-        int p = partition(arr, l, r);
-        quickSort(arr, l, p - 1);
-        quickSort(arr, p + 1, r);
+        int mid = (right + left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+
 
     }
 
-    private static int partition(int[] arr, int l, int r) {
-
-        int v = arr[l];
-        int j = l;
-        for (int i = l; i <= r; i++) {
-            if (arr[i] < v) {
-                AssistUtil.swap(arr, i, j + 1);
-                j++;
-            }
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int[] temp = new int[right - left + 1];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = arr[left + i];
         }
-        AssistUtil.swap(arr, j, l);
-        return j;
-    }
-
-
-    public static void mergeSort(int arr[]) {
-
-        mergeSort(arr, 0, arr.length - 1);
-
-    }
-
-    private static void mergeSort(int[] arr, int l, int r) {
-        if (l >= r) {
-            return;
-        }
-
-        int mid = (r + l) / 2;
-        mergeSort(arr, l, mid);
-        mergeSort(arr, mid + 1, r);
-        merge(arr, l, mid, r);
-
-    }
-
-    private static void merge(int[] arr, int l, int mid, int r) {
-
-        int temp[] = new int[r - l + 1];
-
-        for (int i = l; i <= r; i++) {
-            temp[i - l] = arr[i];
-        }
-
-        int i = l;
+        int i = left;
         int j = mid + 1;
 
-        for (int k = l; k <= r; k++) {
+        for (int k = left; k <= right; k++) {
+
             if (i > mid) {
-                arr[k] = temp[j - l];
+                arr[k] = temp[j - left];
                 j++;
-            } else if (j > r) {
-                arr[k] = temp[i - l];
+            }else if( j > right){
+                arr[k] = temp[i - left];
                 i++;
-            } else if (temp[i - l] < temp[j - l]) {
-                arr[k] = temp[i - l];
-                i++;
-            } else {
-                arr[k] = temp[j - l];
+            }
+            else if(temp[i - left] > temp[j - left]){
+                arr[k] = temp[j-left];
                 j++;
+            }else {
+                arr[k] = temp[i - left];
+                i++;
             }
 
         }
 
+
     }
 
 
-    public static void insertSort(int arr[]) {
+    public static void quick(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int p = partition(arr, left, right);
+        quick(arr, left, p - 1);
+        quick(arr, p + 1, right);
+    }
+
+    private static int partition(int[] arr, int left, int right) {
+        int j = left;
+        int data = arr[left];
+        for (int i = left; i <= right; i++) {
+            if (arr[i] < data) {
+                AssistUtil.swap(arr, j + 1, i);
+                j++;
+            }
+        }
+        AssistUtil.swap(arr, j, left);
+        return j;
+
+    }
+
+
+    public static void insert(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            int temp = arr[i];
-            int j;
-            for (j = i; j > 0; j--) {
-                if (temp < arr[j - 1]) {
-                    arr[j] = arr[j - 1];
-                } else {
-                    break;
-                }
+            int index = arr[i];
+            int j = i;
+            for (; j > 0 && arr[j - 1] > index; j--) {
+                arr[j] = arr[j - 1];
             }
-            arr[j] = temp;
+            arr[j] = index;
         }
-
     }
 
 
-    public static void selectSort(int arr[]) {
+    public static void select(int arr[]) {
 
         for (int i = 0; i < arr.length; i++) {
+            int index = i;
 
-            int temp = i;
             for (int j = i; j < arr.length; j++) {
-                if (arr[j] < arr[temp]) {
-                    temp = j;
+                if (arr[j] < arr[index]) {
+                    index = j;
                 }
             }
-            AssistUtil.swap(arr, temp, i);
+
+            AssistUtil.swap(arr, index, i);
+
         }
 
 
     }
 
 
-    public static void bubbleSort(int arr[]) {
+    public static void bubble(int arr[]) {
 
         for (int i = 0; i < arr.length; i++) {
-            for (int j = arr.length - 1; j > 0; j--) {
 
-                if (arr[j] < arr[j - 1]) {
-                    AssistUtil.swap(arr, j, j - 1);
+            for (int j = arr.length - 1; j > i; j--) {
+                if (arr[j - 1] > arr[j]) {
+                    AssistUtil.swap(arr, j - 1, j);
                 }
             }
+
         }
+
     }
+
 
     public static void main(String[] args) {
 
         int[] ints = AssistUtil.generateArr(10, 1, 50);
 
 
-        heapSort(ints, ints.length);
+        mergeSort(ints, 0, ints.length - 1);
 
         for (int anInt : ints) {
             System.out.println(anInt);
